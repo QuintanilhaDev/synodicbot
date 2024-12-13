@@ -1,11 +1,27 @@
 import asyncio
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CommandHandler, CallbackQueryHandler, ContextTypes
+from flask import Flask
 
-# Substitua pelo seu token
+
+app = Flask(__name__)
+
+@app.route('/')
+def index():
+    return "Bot está ativo!", 200
+
+import threading
+
+def run_flask():
+    app.run(host="0.0.0.0", port=5000)
+
+# Executar Flask em uma thread separada
+thread = threading.Thread(target=run_flask)
+thread.start()
+
 TOKEN = '7619451682:AAH_A1bCWIMhs9-7thGUM7AVCKnwR2lmLQM'
 
-# Função que cria os botões do menu principal
+
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     message_text = "Oi! Tudo certo? \n Eu sou o Synodic Bot! Possuo informações sobre nosso projeto. Ah, quase me esqueci! Por favor, diga o que achou do nosso projeto no botão abaixo!"
     
